@@ -12,10 +12,10 @@ Note: This is the first prototype working version. For efficiency hash_map ( or 
 #define TRANSLITERATION_H
 
 
-#include <string>
-#include <iostream>
-#include <map>
-//#include <ext/hash_map>
+#include<string>
+#include<iostream>
+#include<map>
+//#include<ext/hash_map>
 
 using namespace std;
 //using namespace __gnu_cxx;
