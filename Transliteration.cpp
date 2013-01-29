@@ -13,7 +13,7 @@ static string prefix[][2] = {   {"k","&#x0915;"},
                                 {"j","&#x091c;"},
                                 {"jh","&#x091d;"},
                                 {".y","&#x091e;"},
-                                {".t","&#x091f;"}, {"T","&#x091f;"},
+                                {".t","&#x091f;"},{"T","&#x091f;"},
                                 {".th","&#x0920;"},{"Th","&#x0920;"},
                                 {".d","&#x0921;"},{"D","&#x0921;"},
                                 {".dh","&#x0922;"},{"Dh","&#x0922;"},
@@ -37,26 +37,26 @@ static string prefix[][2] = {   {"k","&#x0915;"},
                                 {"s","&#x0938;"},
                                 {"h","&#x0939;"},
                                 {"Gy", "&#x091c;&#x094d;&#x091e;"}
-                    /*		   {"ksh", "&#x0915;&#x094d;&#x0937;"},
-                               {"tr", "&#x0924;&#x094d;&#x0930;"},
-                               {"gy", "&#x091c;&#x094d;&#x091e;"},
-                               {"shr", "&#x0936;&#x094d;&#x0930;&#x0940;"} */ //check if necessary
+                              /*{"ksh", "&#x0915;&#x094d;&#x0937;"},
+                                {"tr", "&#x0924;&#x094d;&#x0930;"},
+                                {"gy", "&#x091c;&#x094d;&#x091e;"},
+                                {"shr", "&#x0936;&#x094d;&#x0930;&#x0940;"} */ //check if necessary
                            };
 
 
 static string  suffix[][2] = {  {"" ,"&#x094d;"},
-								{"a",""},
-								{"aa","&#x093e;"},
-								{"i","&#x093f;"},
-								{"ii","&#x0940;"},
-								{"u","&#x0941;"},
-								{"uu","&#x0942;"},
-								{"e","&#x0947;"},
-								{"ai","&#x0948;"},
-								{"o","&#x094b;"},
-								{"au","&#x094c;"},
-							//	{"ah","&#x0903;"} //this may cause problem, : is trivial
-                            };
+                                {"a",""},
+                                {"aa","&#x093e;"},
+                                {"i","&#x093f;"},
+                                {"ii","&#x0940;"},
+                                {"u","&#x0941;"},
+                                {"uu","&#x0942;"},
+                                {"e","&#x0947;"},
+                                {"ai","&#x0948;"},
+                                {"o","&#x094b;"},
+                                {"au","&#x094c;"},
+                              //{"ah","&#x0903;"} //this may cause problem, : is trivial
+                              };
 
 static string independent[][2] = {  {"OM","&#x0950;"},
                                     {"a", "&#x0905;"},
@@ -65,12 +65,12 @@ static string independent[][2] = {  {"OM","&#x0950;"},
                                     {"ii", "&#x0908;"},
                                     {"u", "&#x0909;"},
                                     {"uu", "&#x090a;"},
-                                    {"ae", "&#x090f;"},	{"e", "&#x090f;"},
+                                    {"ae", "&#x090f;"},    {"e", "&#x090f;"},
                                     {"ai", "&#x0910;"},
                                     {"o", "&#x0913;"},
                                     {"au", "&#x0914;"},
                                     {"am", "&#x0905;&#x0902;"},
-                                //	{"ah", "&#x0905;&#x0903;"}, //causes problem
+                                 // {"ah", "&#x0905;&#x0903;"}, //causes problem
                                     {" ", " "},
                                     {"N", "&#x0902;"},  //anusar
                                     {"`", "&#x0901;"}, {"'","&#x0901;"}, //chandra bindu
@@ -98,36 +98,36 @@ static string independent[][2] = {  {"OM","&#x0950;"},
 
 translit::translit()
 {
-	load();
+    load();
 }
 
 
 void translit::load()
 {
     maxKeyLen = 0;
-	for(int i = 0;i<PREFIX_COUNT;i++)
-	{
-		for(int j  = 0;j<SUFFIX_COUNT;j++)
-		{
+    for(int i = 0;i<PREFIX_COUNT;i++)
+    {
+        for(int j  = 0;j<SUFFIX_COUNT;j++)
+        {
             if( (prefix[i][0] + suffix[j][0]).size() > maxKeyLen)
                 maxKeyLen = (prefix[i][0] + suffix[j][0]).size();
-			mapping[ prefix[i][0]+suffix[j][0] ] = prefix[i][1] + suffix[j][1];
+            mapping[ prefix[i][0]+suffix[j][0] ] = prefix[i][1] + suffix[j][1];
 
-		}
-	}
+        }
+    }
 
-	for(int i = 0;i<INDEPENDENT_COUNT;i++)
-	{
+    for(int i = 0;i<INDEPENDENT_COUNT;i++)
+    {
         if(independent[i][0].size() > maxKeyLen)
            maxKeyLen = independent[i][0].size();
-  		mapping[independent[i][0]] = independent[i][1];
-	}
-	for(int i = 0;i<PREFIX_COUNT;i++) //for convenient, don't require "a" sound at last
-	{
+          mapping[independent[i][0]] = independent[i][1];
+    }
+    for(int i = 0;i<PREFIX_COUNT;i++) //for convenient, don't require "a" sound at last
+    {
         if( (prefix[i][0] + " ").size() > maxKeyLen)
             maxKeyLen = (prefix[i][0] + " ").size();
-		mapping[ prefix[i][0] + " " ] = (prefix[i][1] + suffix[1][1] + " ");
-	}
+        mapping[ prefix[i][0] + " " ] = (prefix[i][1] + suffix[1][1] + " ");
+    }
 
 
 }
@@ -135,63 +135,63 @@ void translit::load()
 
 string translit::toDevnagari(string roman)
 {
-	string result = "";
-	int cur = 0;
-	int end = roman.size();
-	bool found = false;
+    string result = "";
+    int cur = 0;
+    int end = roman.size();
+    bool found = false;
 
     map<string,string>::iterator it;
-	while(cur < end)
-	{
+    while(cur < end)
+    {
         for(int i = maxKeyLen;i>=1;i--)
-		{
-			if(i<=(end - cur) && !found)
-			{
+        {
+            if(i<=(end - cur) && !found)
+            {
                 it = mapping.find(roman.substr(cur,i));
 
-				if(it!=mapping.end())
-				{
+                if(it!=mapping.end())
+                {
 
-					if(it->second == "[")  //support roman/english/html tags in between
-					{
-					   cur++;
-					   while(roman[cur]!=']' && (cur < end))
-					   {
-						result+=roman[cur];
-						cur++;
-					   }
-					}
-					else
-					{
-						result += it->second;
-						found = true;
-						cur += i;
-					}
-				}
-
-
-			}
+                    if(it->second == "[")  //support roman/english/html tags in between
+                    {
+                       cur++;
+                       while(roman[cur]!=']' && (cur < end))
+                       {
+                        result+=roman[cur];
+                        cur++;
+                       }
+                    }
+                    else
+                    {
+                        result += it->second;
+                        found = true;
+                        cur += i;
+                    }
+                }
 
 
-		}
-		if(found == false)
-		{
-			if(roman[cur] == '/')
-			{
-			   cur++;
-			   while(roman[cur] != ' ' && (cur < end))
-			   {
-				result+= roman[cur];
-				cur++;
-			   }
-			}
-			if(roman[cur]!= ']' && (cur < end))
-			  result += roman[cur];
-			cur++;
-		}
-		found = false;
-	}
+            }
 
-	return result;
+
+        }
+        if(found == false)
+        {
+            if(roman[cur] == '/')
+            {
+               cur++;
+               while(roman[cur] != ' ' && (cur < end))
+               {
+                result+= roman[cur];
+                cur++;
+               }
+            }
+            if(roman[cur]!= ']' && (cur < end))
+              result += roman[cur];
+            cur++;
+        }
+        found = false;
+    }
+
+    return result;
 }
 

@@ -1,14 +1,13 @@
 /************************************************************************************************
 Author: Chaman Thapa.
 
-Note: This is the first prototype working version. For efficiency hash_map ( or any other efficient
-      hashing mechanism is yet to be added.
+Note: This is the first prototype working version. For efficiency hash_map can be used.
 
 *************************************************************************************************/
 
 
 
-#ifndef	TRANSLITERATION_H
+#ifndef TRANSLITERATION_H
 #define TRANSLITERATION_H
 
 
@@ -23,15 +22,15 @@ using namespace std;
 
 class translit{
  public:
-		translit();
-		string toDevnagari(string roman);
-		void load();
-		
-		
+    translit();
+    string toDevnagari(string roman);
+    void load();
+
+
  private:
     map<string,string> mapping;
     unsigned int maxKeyLen;
-	
+
 
 };
 
