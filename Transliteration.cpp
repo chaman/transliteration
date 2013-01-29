@@ -119,9 +119,10 @@ void translit::load()
     for(int i = 0;i<INDEPENDENT_COUNT;i++)
     {
         if(independent[i][0].size() > maxKeyLen)
-           maxKeyLen = independent[i][0].size();
-          mapping[independent[i][0]] = independent[i][1];
+            maxKeyLen = independent[i][0].size();
+        mapping[independent[i][0]] = independent[i][1];
     }
+
     for(int i = 0;i<PREFIX_COUNT;i++) //for convenient, don't require "a" sound at last
     {
         if( (prefix[i][0] + " ").size() > maxKeyLen)
@@ -140,7 +141,7 @@ string translit::toDevnagari(string roman)
     int end = roman.size();
     bool found = false;
 
-    map<string,string>::iterator it;
+    unordered_map<string,string>::iterator it;
     while(cur < end)
     {
         for(int i = maxKeyLen;i>=1;i--)
@@ -151,15 +152,14 @@ string translit::toDevnagari(string roman)
 
                 if(it!=mapping.end())
                 {
-
                     if(it->second == "[")  //support roman/english/html tags in between
                     {
-                       cur++;
-                       while(roman[cur]!=']' && (cur < end))
-                       {
-                        result+=roman[cur];
                         cur++;
-                       }
+                        while(roman[cur]!=']' && (cur < end))
+                        {
+                            result+=roman[cur];
+                            cur++;
+                        }
                     }
                     else
                     {
@@ -168,29 +168,33 @@ string translit::toDevnagari(string roman)
                         cur += i;
                     }
                 }
-
-
-            }
-
-
+             }
         }
+
         if(found == false)
         {
             if(roman[cur] == '/')
             {
-               cur++;
-               while(roman[cur] != ' ' && (cur < end))
-               {
-                result+= roman[cur];
                 cur++;
-               }
+                while(cur < end)
+                {
+                    if(roman[cur] != ' ')
+                    {
+                        result+= roman[cur];
+                        cur++;
+                    } else {
+                        break;
+                    }
+                }
             }
-            if(roman[cur]!= ']' && (cur < end))
-              result += roman[cur];
+            if(cur < end)
+                if(roman[cur]!= ']')
+                    result += roman[cur];
             cur++;
         }
         found = false;
-    }
+
+    } //end main while
 
     return result;
 }

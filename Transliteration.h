@@ -1,8 +1,5 @@
 /************************************************************************************************
 Author: Chaman Thapa.
-
-Note: This is the first prototype working version. For efficiency hash_map can be used.
-
 *************************************************************************************************/
 
 
@@ -13,12 +10,10 @@ Note: This is the first prototype working version. For efficiency hash_map can b
 
 #include<string>
 #include<iostream>
-#include<map>
-//#include<ext/hash_map>
+#include<unordered_map>
+
 
 using namespace std;
-//using namespace __gnu_cxx;
-
 
 class translit{
  public:
@@ -28,7 +23,7 @@ class translit{
 
 
  private:
-    map<string,string> mapping;
+    unordered_map<string,string> mapping;
     unsigned int maxKeyLen;
 
 
