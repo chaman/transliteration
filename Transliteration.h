@@ -21,12 +21,9 @@ class translit{
     string toDevnagari(string roman);
     void load();
 
-
  private:
     unordered_map<string,string> mapping;
     unsigned int maxKeyLen;
-
-
 };
 
 #endif
